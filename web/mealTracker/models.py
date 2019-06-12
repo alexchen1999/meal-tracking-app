@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 class Meal(models.Model):
-    price = models.DecimalField(decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     category = models.CharField(max_length=200)
     # need to look up what date published is
-    timestamp = models.DateTimeField('date published')
+    timestamp = models.DateTimeField(auto_now_add=True)
     
 # =============================================================================
 #     def setPrice(self, price):

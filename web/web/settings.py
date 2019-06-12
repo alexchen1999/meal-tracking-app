@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+        
+    # want to be able to connect to mealTracker app
+    'mealTracker',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +78,13 @@ WSGI_APPLICATION = 'web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #Use generated postgresql database
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fliuawtv',
+        'HOST': 'raja.db.elephantsql.com',
+        'USER': 'fliuawtv',
+        'PASSWORD': 'UotKI9ipT2Mdb-CUyPuvaS3FW_svhy1h',
+        'PORT': '5432',
     }
 }
 
