@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import Meal
 from .forms import MealForm
+from rest_framework import viewsets
+from .serializers import MealSerializer
 
 
 def index(request):
@@ -29,3 +32,17 @@ def add(request):
         form = MealForm()
         
     return render(request, 'add.html', {'form': form })
+
+@csrf_exempt
+def getData(request):
+	data = Model.objects.all()
+	if request.method == 'GET':
+		serializer = MealSerializer(data, many=True)
+		return JsonResponse(serializer.data, safe=False)
+
+class MealViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows meals to be viewed or edited.
+    """
+    queryset = Meal.objects.all().order_by('timestamp')
+    serializer_class = MealSerializer
