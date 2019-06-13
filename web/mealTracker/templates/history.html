@@ -5,7 +5,8 @@
     <ul>
         {% for meal in meals %}
         <li> Timestamp: {{ meal.timestamp }}
-        Category: {{ meal.category }} Price: ${{ meal.price }} </li>
+        Category: {{ meal.category }} Price: ${{ meal.price }}
+         Name: {{ meal.name }}  Notes: {{ meal.notes }} </li>
         {% endfor %}
     </ul>
     <a href="/home/add">Add a meal</href>

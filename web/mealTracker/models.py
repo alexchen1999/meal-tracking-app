@@ -6,6 +6,8 @@ class Meal(models.Model):
     category = models.CharField(max_length=200)
     # need to look up what date published is
     timestamp = models.DateTimeField(auto_now_add=True) 
+    name = models.CharField(max_length=100, default="Madras Chettinaad")
+    notes = models.CharField(max_length=250, default="")
     
 # =============================================================================
 #     def setPrice(self, price):

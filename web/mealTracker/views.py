@@ -20,7 +20,9 @@ def add(request):
         if form.is_valid():
             price = form.cleaned_data['price']
             category = form.cleaned_data['category']
-            meal = Meal(price=price, category=category)
+            name = form.cleaned_data['name']
+            notes = form.cleaned_data['notes']
+            meal = Meal(price=price, category=category, name=name, notes=notes)
             meal.save()
             return HttpResponseRedirect('/home/history')
     else:
