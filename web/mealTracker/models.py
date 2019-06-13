@@ -5,7 +5,7 @@ class Meal(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     category = models.CharField(max_length=200)
     # need to look up what date published is
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True) 
     
 # =============================================================================
 #     def setPrice(self, price):
