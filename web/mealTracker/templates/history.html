@@ -4,8 +4,10 @@
     <h1>bullo borld</h1>
     <ul>
         {% for meal in meals %}
-        <li> {{ meal.price }} </li>
+        <li> Timestamp: {{ meal.timestamp }}
+        Category: {{ meal.category }} Price: ${{ meal.price }} </li>
         {% endfor %}
     </ul>
+    <a href="/home/add">Add a meal</href>
     </body>
 </html>
