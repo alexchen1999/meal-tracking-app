@@ -13,5 +13,7 @@ urlpatterns = [
     path('add', views.add, name='add'),
     path('home', TemplateView.as_view(template_name="home.html"), name="home"),
     path('getData', views.getData),
-    path('api', include(router.urls))
+    path('api', include(router.urls)),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register', views.register, name='register')
 ]

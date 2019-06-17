@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from .models import Meal
 from .forms import MealForm
 from rest_framework import viewsets
@@ -46,3 +48,22 @@ class MealViewSet(viewsets.ModelViewSet):
     """
     queryset = Meal.objects.all().order_by('timestamp')
     serializer_class = MealSerializer
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('/home')
+    else:    
+        form = UserCreationForm()
+        
+        
+    context = {'form' : form}
+    return render(request, 'registration/register.html', context)

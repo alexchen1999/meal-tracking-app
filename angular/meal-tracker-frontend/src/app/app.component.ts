@@ -9,7 +9,7 @@ import { ApiService } from './api.service';
 })
 export class AppComponent {
   title = 'meal-tracker-frontend';
-  meals = [{name: 'madras chettinaad'}, {name: 'chick fil a'}];
+  meals = [];
 
   constructor(private api : ApiService) {
     this.getMeals();
