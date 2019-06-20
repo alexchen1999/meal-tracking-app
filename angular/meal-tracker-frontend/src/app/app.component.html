@@ -1,13 +1,23 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<div class="container">
   <h1>
-    Bullo pullo
+    Meals
   </h1>
+  <p>Click on a meal name to see more detailed information.</p>
+  <div class="card">
+    <ul *ngFor="let meal of meals" class="list-group list-group-flush">
+      <li class="list-group-item" (click)="showMeal(meal)" style="cursor:pointer">{{meal.name}}</li>
+    </ul>
+  </div>
+  <hr />
+  <h3>More Info</h3>
+  <label>Timestamp</label><input type="text" [(ngModel)]="selectedMeal.timestamp" disabled /><br />
+  <label>Name</label><input type="text" [(ngModel)]="selectedMeal.name" /><br />
+  <label>Category</label><input type="text" [(ngModel)]="selectedMeal.category" /><br />
+  <label>Price</label><input type="text" [(ngModel)]="selectedMeal.price" /><br />
+  <label>Notes</label><input type="text" [(ngModel)]="selectedMeal.notes" /><br />
+  <button *ngIf="selectedMeal.id != null" (click)="updateMeal()" class="btn btn-info">Update</button>
+  <button *ngIf="selectedMeal.id == null" (click)="createMeal()" class="btn btn-info">Create</button>
+  <button *ngIf="selectedMeal.id != null" (click)="deleteMeal()" class="btn btn-info">Delete</button>
 </div>
-<ul>
-  <li *ngFor="let meal of meals">
-    <h2>{{meal.name}}</h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>

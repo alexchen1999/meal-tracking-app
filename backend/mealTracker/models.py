@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+# Editing the model requires a db migration (manage.py makemigrations, migrate)
 class Meal(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     category = models.CharField(max_length=200)

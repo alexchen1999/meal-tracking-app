@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate, login
 from .models import Meal
 from .forms import MealForm
 from rest_framework import viewsets
-from .serializers import MealSerializer
+from rest_framework.response import Response
+from .serializers import MealSerializer, MealSerializerAbbr
 
 
 def index(request):
@@ -45,9 +46,15 @@ def getData(request):
 class MealViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows meals to be viewed or edited.
+    e.g. at /api/meals/
     """
     queryset = Meal.objects.all().order_by('timestamp')
     serializer_class = MealSerializer
+
+    def list(self, request, *args, **kwargs):
+        meals = Meal.objects.all()
+        serializer = MealSerializerAbbr(meals, many=True)
+        return Response(serializer.data)
 
 def register(request):
     if request.method == 'POST':
@@ -60,7 +67,7 @@ def register(request):
             
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/home')
+            return redirect('/')
     else:    
         form = UserCreationForm()
         
