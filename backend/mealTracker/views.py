@@ -36,13 +36,6 @@ def add(request):
         
     return render(request, 'add.html', {'form': form })
 
-@csrf_exempt
-def getData(request):
-	data = Model.objects.all()
-	if request.method == 'GET':
-		serializer = MealSerializer(data, many=True)
-		return JsonResponse(serializer.data, safe=False)
-
 class MealViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows meals to be viewed or edited.
