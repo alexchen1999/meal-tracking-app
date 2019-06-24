@@ -13,7 +13,7 @@ from .serializers import MealSerializer, MealSerializerAbbr
 
 
 def index(request):
-    return HttpResponse("Hello, world!11!!!!")
+    return render(request, 'main.html')
 
 def history(request):
     meals = Meal.objects.order_by('timestamp')
