@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+
 # Create your models here.
 # Editing the model requires a db migration (manage.py makemigrations, migrate)
 
@@ -24,9 +25,9 @@ class UserManager(BaseUserManager):
         return user_obj
 
 class CustomUser(AbstractUser):
-    username = models.TextField(max_length=30, unique=True)
-    password = models.TextField(max_length=30)
-    name = models.TextField(max_length=30)
+    username = models.CharField(max_length=30, unique=True)
+    password = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
     
     USERNAME_FIELD = 'username'
     

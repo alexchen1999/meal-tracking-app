@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class MealForm(forms.Form):
     name = forms.CharField(max_length=100)
@@ -18,11 +20,11 @@ class MealForm(forms.Form):
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):
-        model = CustomUser
-        fields = ('username', 'password', 'name')
+        model = User
+        fields = ('username', 'name')
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = CustomUser
-        fields = ('username', 'password', 'name')
+        model = User
+        fields = ('username', 'name')

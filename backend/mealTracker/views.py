@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from .models import Meal
 from .forms import MealForm
+from .forms import CustomUserCreationForm
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr
@@ -51,7 +52,7 @@ class MealViewSet(viewsets.ModelViewSet):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         
         if form.is_valid():
             form.save()
@@ -62,7 +63,7 @@ def register(request):
             login(request, user)
             return redirect('/')
     else:    
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
         
         
     context = {'form' : form}
