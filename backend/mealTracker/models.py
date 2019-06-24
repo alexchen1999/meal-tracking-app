@@ -1,15 +1,39 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 # Create your models here.
 # Editing the model requires a db migration (manage.py makemigrations, migrate)
 
+class UserManager(BaseUserManager):
+    def create_user(self, username, name, password=None):
+        if not username:
+            raise ValueError("Please specify a username.")
+        if not password:
+            raise ValueError("Please specify a password.")
+        user_obj = self.model(username = username)
+        user_obj.set_password(password)
+        user_obj.save(using=self._db)
+        return user_obj
+
+    def create_superuser(self, username, password=None, name=None, email=None):
+        user_obj = self.create_user(username=username, password=password, name=name)
+        user_obj.username = username
+        user_obj.is_superuser = True
+        user_obj.is_staff = True
+        user_obj.save(using=self._db)
+        return user_obj
+
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=30, unique=True)
-    password = models.CharField(max_length=30)
-    name = models.CharField(max_length=30)
+    username = models.TextField(max_length=30, unique=True)
+    password = models.TextField(max_length=30)
+    name = models.TextField(max_length=30)
     
     USERNAME_FIELD = 'username'
+    
+    objects = UserManager()
+    
+    def __str__(self):
+        return self.username
 
 
 class Meal(models.Model):

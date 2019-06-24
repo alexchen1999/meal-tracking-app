@@ -139,4 +139,4 @@ STATIC_URL = '/static/'
 #When you login, redirects to this page (index)
 LOGIN_REDIRECT_URL = '/'
 
-AUTH_USER_MODEL = 'mealTracker.CustomUser' # new
+AUTH_USER_MODEL = 'mealTracker.CustomUser' # changes the built in user model to ours
