@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ApiService } from './api.service';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
+import {UserProfileComponent} from './components/user-profile/user-profile.component'
 export interface Meal {
   name: string;
   timestamp: string;

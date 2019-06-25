@@ -8,11 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialsModule } from './angularMaterial.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { MealComponent } from './components/meal/meal.component';
 
 // import all modules used by the component here
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserProfileComponent,
+    //MealComponent
   ],
   imports: [
     HttpModule,
