@@ -1,6 +1,9 @@
 <div>
-  <h1>{{ user.name }}</h1>
-  <h2>{{ user.username }}</h2>
+  <div class="card">
+    <ul *ngFor="let user of users" class="list-group list-group-flush">
+      <li class="list-group-item" style="cursor:pointer">{{user.name}}</li>
+    </ul>
+  </div>
   <!--<app-meal *ngFor="let meal of meals" [meal]="meal">
   </app-meal>-->
 </div>

@@ -6,6 +6,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'/meals', views.MealViewSet)
+router.register(r'/users', views.UserViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,5 +15,6 @@ urlpatterns = [
     path('home/', TemplateView.as_view(template_name="home.html"), name="home"),
     path('api', include(router.urls)),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('register', views.register, name='register')
+    path('register', views.register, name='register'),
+    path('currentUser', views.getUser, name='getUser')
 ]

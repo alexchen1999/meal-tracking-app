@@ -36,6 +36,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+    # def get(self):
+    #     return self.username
+
 
 class Meal(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)

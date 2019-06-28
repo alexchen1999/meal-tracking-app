@@ -4,13 +4,15 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from .models import Meal
+from .models import Meal, CustomUser
 from .forms import MealForm
 from .forms import CustomUserCreationForm
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import MealSerializer, MealSerializerAbbr
+from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
 
+def getUser(request):
+    return request
 
 def index(request):
     return render(request, 'main.html')
@@ -49,6 +51,14 @@ class MealViewSet(viewsets.ModelViewSet):
         meals = Meal.objects.all()
         serializer = MealSerializerAbbr(meals, many=True)
         return Response(serializer.data)
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    e.g. at /api/users/
+    """
+    queryset = CustomUser.objects.all().order_by('id')
+    serializer_class = UserSerializer
 
 def register(request):
     if request.method == 'POST':
