@@ -3,9 +3,11 @@
     <body>
         <h1>Main Page</h1>
         {% if user.is_authenticated %}
-        <h2> Welcome {{user.name}} </h2>
-        <a href="/logout">Logout</href>
+            <h2> Welcome {{user.name}} </h2>
+            <a href="/history">Show History</a> <br>
+            <a href="/logout">Logout</href>
+        {% else %}
+        <a href="/accounts/login">Login</a> 
         {% endif %}
-        
     </body>
 </html>
