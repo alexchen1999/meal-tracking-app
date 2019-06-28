@@ -4,6 +4,8 @@
         <h1>Main Page</h1>
         {% if user.is_authenticated %}
         <h2> Welcome {{user.name}} </h2>
+        <a href="/logout">Logout</href>
         {% endif %}
+        
     </body>
 </html>

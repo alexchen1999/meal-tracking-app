@@ -10,18 +10,23 @@ from .forms import CustomUserCreationForm
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as django_logout
 
+@login_required
 def getUser(request):
     return request
 
 def index(request):
     return render(request, 'main.html')
 
+@login_required
 def history(request):
     meals = Meal.objects.order_by('timestamp')
     context = {'meals' : meals}
     return render(request, 'history.html', context)
 
+@login_required
 def add(request):
     if request.method == 'POST':
         print('reaches here')
@@ -78,3 +83,8 @@ def register(request):
         
     context = {'form' : form}
     return render(request, 'registration/register.html', context)
+
+@login_required
+def logout(request):
+    django_logout(request)
+    return HttpResponseRedirect('/')
