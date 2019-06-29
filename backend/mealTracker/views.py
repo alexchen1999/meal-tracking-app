@@ -12,10 +12,15 @@ from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
+from rest_framework.views import APIView
+from django.http import JsonResponse
 
-@login_required
-def getUser(request):
-    return request
+class UserMealView(APIView):
+    def get(self, request):
+        user = self.request.user
+        meals = Meal.objects.filter(user=user).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+        return JsonResponse({'user': user.name, 'meals': list(meals)})
+        # return JsonResponse({'user': 'Bob'})
 
 def index(request):
     return render(request, 'main.html')
@@ -81,7 +86,6 @@ class UserMealViewSet(viewsets.ModelViewSet):
 
         user = self.request.user
         return Meal.objects.filter(user=user)
-    
 
 def register(request):
     if request.method == 'POST':

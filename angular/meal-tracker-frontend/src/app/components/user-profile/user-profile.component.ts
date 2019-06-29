@@ -13,16 +13,29 @@ export class UserProfileComponent implements OnInit {
   user:User;
 
   users = [];
+  currentUser;
 
 
   constructor(private userService : UserService) { 
     this.getUsers();
+    this.getCurrentUser();
   }
 
   getUsers = () => {
     this.userService.getAllUsers().subscribe(
       data => {
         this.users = data;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getCurrentUser = () => {
+    this.userService.getCurrentUser().subscribe(
+      data => {
+        this.currentUser = data.user;
       },
       error => {
         console.log(error);

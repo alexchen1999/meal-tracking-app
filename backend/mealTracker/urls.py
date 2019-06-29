@@ -17,6 +17,6 @@ urlpatterns = [
     path('api', include(router.urls)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register', views.register, name='register'),
-    path('currentUser', views.getUser, name='getUser'),
-    path('logout', views.logout, name='logout')
+    path('logout', views.logout, name='logout'),
+    path('user', views.UserMealView.as_view(), name='test')
 ]

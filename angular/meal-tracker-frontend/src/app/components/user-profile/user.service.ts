@@ -7,13 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  baseurl = "http://localhost:8000/api";
+  baseurl = "http://localhost:8000";
   httpHeaders = new HttpHeaders({'Content-type': 'application/json'});
 
   constructor(private http : HttpClient) { }
 
   getAllUsers(): Observable<any> {
-    return this.http.get(this.baseurl + "/users", 
+    return this.http.get(this.baseurl + "/api/users", 
+      {headers: this.httpHeaders});
+  }
+
+  getCurrentUser(): Observable<any> {
+    return this.http.get(this.baseurl + "/user", 
       {headers: this.httpHeaders});
   }
 
