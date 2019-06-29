@@ -12,10 +12,12 @@ from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
+from django.http import JsonResponse
 
 @login_required
 def getUser(request):
-    return request
+    data = {'username': request.user.username}
+    return JsonResponse(data)
 
 def index(request):
     return render(request, 'main.html')
@@ -64,6 +66,14 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+
+        if pk == "current":
+            return self.request.user
+
+        return super(UserViewSet, self).get_object()
 
 def register(request):
     if request.method == 'POST':
