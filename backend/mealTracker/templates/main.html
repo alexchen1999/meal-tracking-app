@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1>Main Page</h1>
+        <h1>MEAL TRACKING APP XAXAXAXA</h1>
         {% if user.is_authenticated %}
             <h2> Welcome {{user.name}} </h2>
             <a href="/history">Show History</a> <br>
-            <a href="/logout">Logout</href>
+            <a href="/logout">Logout</a>
         {% else %}
-        <a href="/accounts/login">Login</a> 
+        <a href="/accounts/login">Login</a> <br>
+        <a href="/register/">Register</a>
         {% endif %}
     </body>
 </html>

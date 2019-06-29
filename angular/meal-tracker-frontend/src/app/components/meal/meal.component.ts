@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Meal } from 'src/app/models/Meal';
+import {MealService} from '../meal/meal.service'
 
 @Component({
   selector: 'app-meal',
@@ -7,19 +8,26 @@ import { Meal } from 'src/app/models/Meal';
   styleUrls: ['./meal.component.css']
 })
 export class MealComponent implements OnInit {
-  @Input() meal: Meal;
+  meals = [];
 
-  constructor() { 
-    this.meal = {
-      name: 'Madras',
-      timestamp: "",
-      category: "Dinner",
-      price: 9.99,
-      notes: ""
-    }
+
+  constructor(private mealService : MealService) { 
+    this.getUsersMeals();
+  }
+
+  getUsersMeals = () => {
+    this.mealService.getAllUsersMeals().subscribe(
+      data => {
+        this.meals = data;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   ngOnInit() {
+
   }
 
 }

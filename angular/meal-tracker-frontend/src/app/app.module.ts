@@ -16,7 +16,7 @@ import { MealComponent } from './components/meal/meal.component';
   declarations: [
     AppComponent,
     UserProfileComponent,
-    //MealComponent
+    MealComponent
   ],
   imports: [
     HttpModule,

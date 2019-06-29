@@ -7,6 +7,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'/meals', views.MealViewSet)
 router.register(r'/users', views.UserViewSet)
+router.register(r'/usersmeals', views.UserMealViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
