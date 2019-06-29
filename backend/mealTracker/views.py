@@ -36,9 +36,13 @@ def add(request):
             category = form.cleaned_data['category']
             name = form.cleaned_data['name']
             notes = form.cleaned_data['notes']
-            meal = Meal(price=price, category=category, name=name, notes=notes)
+
+            if request.user.is_authenticated:
+                userToAdd = request.user
+
+            meal = Meal(price=price, category=category, name=name, notes=notes, user=userToAdd)
             meal.save()
-            return HttpResponseRedirect('/home/history')
+            return HttpResponseRedirect('/history')
     else:
         form = MealForm()
         
@@ -64,6 +68,20 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
+
+class UserMealViewSet(viewsets.ModelViewSet):
+    queryset = Meal.objects.all()
+    serializer_class = MealSerializer
+    
+    def get_queryset(self):
+        """
+        This view should return a list of all the meals
+        for the currently authenticated user.
+        """
+
+        user = self.request.user
+        return Meal.objects.filter(user=user)
+    
 
 def register(request):
     if request.method == 'POST':
