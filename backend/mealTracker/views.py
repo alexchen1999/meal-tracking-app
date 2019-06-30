@@ -20,7 +20,7 @@ class UserMealView(APIView):
         user = self.request.user
         meals = Meal.objects.filter(user=user).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
         return JsonResponse({'user': user.name, 'meals': list(meals)})
-        # return JsonResponse({'user': 'Bob'})
+        # return JsonResponse({'user': 'Bob'}) 
 
 def index(request):
     return render(request, 'main.html')

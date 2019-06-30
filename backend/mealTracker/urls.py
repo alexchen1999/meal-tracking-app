@@ -1,6 +1,8 @@
 from django.urls import include, path
+from django.conf.urls import url
 from django.views.generic.base import TemplateView
 from rest_framework import routers
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -15,7 +17,8 @@ urlpatterns = [
     path('add', views.add, name='add'),
     path('home/', TemplateView.as_view(template_name="home.html"), name="home"),
     path('api', include(router.urls)),
-    path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
+    #path('accounts/', include('django.contrib.auth.urls')),
     path('register', views.register, name='register'),
     path('logout', views.logout, name='logout'),
     path('user', views.UserMealView.as_view(), name='test')
