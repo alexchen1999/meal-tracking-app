@@ -18,8 +18,8 @@ from django.http import JsonResponse
 class UserMealView(APIView):
     def get(self, request):
         user = self.request.user
-        meals = Meal.objects.filter(user=user).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-        return JsonResponse({'user': user.name, 'meals': list(meals)})
+        meals = Meal.objects.filter(user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+        return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
         # return JsonResponse({'user': 'Bob'}) 
 
 def index(request):
