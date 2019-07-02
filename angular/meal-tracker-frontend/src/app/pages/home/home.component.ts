@@ -1,21 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { ApiService } from './services/api.service';
+import { ApiService } from '../../services/api.service';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {UserProfileComponent} from './components/user-profile/user-profile.component';
-export interface Meal {
-  name: string;
-  timestamp: string;
-  price: number;
-}
 
 @Component({
-  selector: 'app-root', // name used to reference component in template/html files
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   providers: [ApiService]
 })
-export class AppComponent {
+export class HomeComponent {
+
   title = 'meal-tracker-frontend';
   meals = [];
   selectedMeal;
@@ -97,3 +92,4 @@ export class AppComponent {
     )
   }
 }
+

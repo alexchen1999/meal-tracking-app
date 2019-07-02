@@ -1,0 +1,18 @@
+<div class="container">
+  <h1 style="text-align:center">Add a meal</h1>
+  <mat-form-field>
+    <input matInput placeholder="Name" type="text" [(ngModel)]="meal.name" />
+  </mat-form-field><br />
+  <mat-form-field>
+    <mat-select placeholder="Category" [(ngModel)]="meal.category">
+      <mat-option *ngFor="let category of categories" value={{category}}>{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field><br />
+  <mat-form-field>
+    <input matInput placeholder="Price" type="text" [(ngModel)]="meal.price" />
+  </mat-form-field><br />
+  <mat-form-field>
+    <input matInput placeholder="Notes" type="text" [(ngModel)]="meal.notes" />
+  </mat-form-field><br />
+  <button (click)="createMeal()" mat-stroked-button color="primary">Create</button>
+</div>
