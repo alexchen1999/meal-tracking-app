@@ -17,6 +17,18 @@ class MealForm(forms.Form):
                                  choices=MEAL_CHOICES)
     price = forms.DecimalField(label="Price", max_digits=6, decimal_places=2)
     
+class DateForm(forms.Form):
+    start_date = forms.DateField(label='Start', widget=forms.SelectDateWidget)
+    end_date = forms.DateField(label='End', widget=forms.SelectDateWidget)
+    
+    def clean(self):
+          cleaned_data = super().clean()
+          start_date = cleaned_data.get("start_date")
+          end_date = cleaned_data.get("end_date")
+          if end_date < start_date:
+              raise forms.ValidationError("The end date should be greater than the start date.")
+              
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):

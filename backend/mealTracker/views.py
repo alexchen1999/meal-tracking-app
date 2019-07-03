@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from .models import Meal, CustomUser
 from .forms import MealForm
 from .forms import CustomUserCreationForm
+from .forms import DateForm
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
@@ -21,7 +22,17 @@ class UserMealView(APIView):
         meals = Meal.objects.filter(user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
         return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
         # return JsonResponse({'user': 'Bob'}) 
-
+        
+class MealsByTimeFrameView(APIView):
+        def get(self, request):
+                form = DateForm()
+                if form.has_changed():        
+                    user = self.request.user
+                    start_date = form.cleaned_data['start_date']
+                    end_date = form.cleaned_data['end_date']
+                    meals = Meal.objects.filter(date__range=[start_date, end_date],user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+                    return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+                return render(request, 'filter_by_time.html', {'form': form})
 def index(request):
     return render(request, 'main.html')
 

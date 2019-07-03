@@ -21,5 +21,6 @@ urlpatterns = [
     #path('accounts/', include('django.contrib.auth.urls')),
     path('register', views.register, name='register'),
     path('logout', views.logout, name='logout'),
-    path('user', views.UserMealView.as_view(), name='test')
+    path('user', views.UserMealView.as_view(), name='test'),
+    path('time', views.MealsByTimeFrameView.as_view(), name='time')
 ]
