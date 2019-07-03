@@ -23,5 +23,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('user', views.UserMealView.as_view(), name='test'),
     path('time', views.filter_by_time, name='time'),
-    path('filterbytime',views.MealsByTimeFrameView.as_view(), name='filterbytime')
+    path('filterbytime',views.MealsByTimeFrameView.as_view(), name='filterbytime'),
+    path('category', views.filter_by_category, name='category'),
+    path('filterbycategory',views.MealsByCategoryView.as_view(), name='filterbycategory')
 ]

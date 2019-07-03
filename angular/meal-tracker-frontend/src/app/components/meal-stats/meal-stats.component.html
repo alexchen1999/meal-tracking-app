@@ -1,3 +1,9 @@
-<p>
-  meal-stats works!
-</p>
+<div class="container">
+    <h1 style="text-align:center">Meal Stats</h1>
+    <mat-form-field>
+      <mat-select placeholder="Category" [(ngModel)]="selectedCategory">
+        <mat-option *ngFor="let category of categories" value={{category}}>{{category}}</mat-option>
+      </mat-select>
+    </mat-form-field><br />
+    <button (click)="getMealsByCategory()" mat-stroked-button color="primary">Search</button>
+  </div>

@@ -2,9 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .models import Meal, CustomUser
-from .forms import MealForm
-from .forms import CustomUserCreationForm
-from .forms import DateForm
+from .forms import MealForm, CustomUserCreationForm, DateForm, CategoryForm
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
@@ -40,6 +38,19 @@ class MealsByTimeFrameView(generics.ListAPIView):
             start = datetime.datetime(sdy, sdm, sdd)
             end = datetime.datetime(edy, edm, edd)
             meals = Meal.objects.filter(timestamp__gte=start, timestamp__lte=end, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+
+def filter_by_category(request):
+    form = CategoryForm()
+    return render(request, 'filter_by_category.html', {'form': form})
+        
+class MealsByCategoryView(generics.ListAPIView):
+        queryset = Meal.objects.all().order_by('timestamp')
+        serializer_class = MealSerializer
+        def get(self, request):
+            user = request.user
+            category = request.GET.get('category')
+            meals = Meal.objects.filter(category=category, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
             return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
                 
 def index(request):
