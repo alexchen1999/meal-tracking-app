@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from rest_framework.views import APIView
 from django.http import JsonResponse
-from datetime import datetime
+import datetime
 
 class UserMealView(APIView):
     def get(self, request):
@@ -33,20 +33,25 @@ def filter_by_time(request):
 class MealsByTimeFrameView(generics.ListAPIView):
         queryset = Meal.objects.all().order_by('timestamp')
         serializer_class = MealSerializer
+        #def get(self, request):
+        #    start = datetime.datetime(2019, 6, 20)
+        #    end = datetime.datetime(2019, 6, 30)
+        #    meals = Meal.objects.filter(timestamp__gte=start, timestamp__lte=end).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+        #    return JsonResponse({'meals': list(meals)})
                 
         @detail_route(methods=['GET'])
         def get_filtered_by_time(self, request, pk=None):
             user = self.request.user
-            sdy = int(request.GET['start_date_year'])
-            sdm = int(request.GET['start_date_month'])
-            sdd = int(request.GET['start_date_day'])
-            edy = int(request.GET['end_date_year'])
-            edm = int(request.GET['end_date_month'])
-            edd = int(request.GET['end_date_day'])
-            start_date = datetime.date(sdy, sdm, sdd)
-            end_date = datetime.date(edy, edm, edd)
-            #start_date = self.request.GET.get['start_date']
-            #end_date = self.request.GET.get['end_date']
+            sdy = int(request.GET.get('start_date_year'))
+            sdm = int(request.GET.get('start_date_month'))
+            sdd = int(request.GET.get('start_date_day'))
+            edy = int(request.GET.get('end_date_year'))
+            edm = int(request.GET.get('end_date_month'))
+            edd = int(request.GET.get('end_date_day'))
+            start_date = datetime.datetime(sdy, sdm, sdd)
+            end_date = datetime.datetime(edy, edm, edd)
+            start_date = self.request.GET.get['start_date']
+            end_date = self.request.GET.get['end_date']
             meals = Meal.objects.filter(timestamp__gte=start_date, timestamp__lte=end_date, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
             return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
             
