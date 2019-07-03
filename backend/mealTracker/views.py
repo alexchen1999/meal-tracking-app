@@ -8,13 +8,15 @@ from .models import Meal, CustomUser
 from .forms import MealForm
 from .forms import CustomUserCreationForm
 from .forms import DateForm
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
+from rest_framework.decorators import detail_route
 from .serializers import MealSerializer, MealSerializerAbbr, UserSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from rest_framework.views import APIView
 from django.http import JsonResponse
+from datetime import datetime
 
 class UserMealView(APIView):
     def get(self, request):
@@ -22,20 +24,42 @@ class UserMealView(APIView):
         meals = Meal.objects.filter(user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
         return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
         # return JsonResponse({'user': 'Bob'}) 
+
+
+def filter_by_time(request):
+    form = DateForm()
+    return render(request, 'filter_by_time.html', {'form': form})
         
-class MealsByTimeFrameView(APIView):
-        def get(self, request):
-            if (request.method == 'GET'):
-                form = DateForm()
-                if form.has_changed():        
-                    user = self.request.user
-                    start_date = form.cleaned_data['start_date']
-                    end_date = form.cleaned_data['end_date']
-                    meals = Meal.objects.filter(date__range=[start_date, end_date],user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-                    return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
-            else:
-                form = DateForm()
-            return render(request, 'filter_by_time.html', {'form': form})
+class MealsByTimeFrameView(generics.ListAPIView):
+        queryset = Meal.objects.all().order_by('timestamp')
+        serializer_class = MealSerializer
+                
+        @detail_route(methods=['GET'])
+        def get_filtered_by_time(self, request, pk=None):
+            user = self.request.user
+            sdy = int(request.GET['start_date_year'])
+            sdm = int(request.GET['start_date_month'])
+            sdd = int(request.GET['start_date_day'])
+            edy = int(request.GET['end_date_year'])
+            edm = int(request.GET['end_date_month'])
+            edd = int(request.GET['end_date_day'])
+            start_date = datetime.date(sdy, sdm, sdd)
+            end_date = datetime.date(edy, edm, edd)
+            #start_date = self.request.GET.get['start_date']
+            #end_date = self.request.GET.get['end_date']
+            meals = Meal.objects.filter(timestamp__gte=start_date, timestamp__lte=end_date, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+            
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        #def get_queryset(self):
+        #    if (self.request.method == 'POST'):
+        #        form = DateForm(self.request.POST)
+        #        if form.has_changed():        
+
+        #    else:
+        #        form = DateForm()
+        #    return render(self.request, 'filter_by_time.html', {'form': form})
 def index(request):
     return render(request, 'main.html')
 

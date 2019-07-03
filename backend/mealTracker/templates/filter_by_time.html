@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form action="{% url 'time' %}" method="GET">
+        <form action="{% url 'filterbytime' %}" method="GET">
             {% csrf_token %}
             
             {% if form.error %}
