@@ -25,6 +25,7 @@ class UserMealView(APIView):
         
 class MealsByTimeFrameView(APIView):
         def get(self, request):
+            if (request.method == 'GET'):
                 form = DateForm()
                 if form.has_changed():        
                     user = self.request.user
@@ -32,7 +33,9 @@ class MealsByTimeFrameView(APIView):
                     end_date = form.cleaned_data['end_date']
                     meals = Meal.objects.filter(date__range=[start_date, end_date],user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
                     return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
-                return render(request, 'filter_by_time.html', {'form': form})
+            else:
+                form = DateForm()
+            return render(request, 'filter_by_time.html', {'form': form})
 def index(request):
     return render(request, 'main.html')
 
