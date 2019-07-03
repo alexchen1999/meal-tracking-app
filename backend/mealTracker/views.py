@@ -51,7 +51,19 @@ class MealsByCategoryView(generics.ListAPIView):
             user = request.user
             category = request.GET.get('category')
             meals = Meal.objects.filter(category=category, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+            mealsList = list(meals)
+
+            # calc average prices/other stats
+            totalPrice = 0
+            avgPrice = 0
+            if len(meals) > 0:
+                for meal in meals:
+                    totalPrice += meal['price']
+                avgPrice = totalPrice/len(meals)
+
+            stats = {'totalPrice': totalPrice, 'avgPrice': avgPrice}
+
+            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': mealsList, 'stats': stats})
                 
 def index(request):
     return render(request, 'main.html')

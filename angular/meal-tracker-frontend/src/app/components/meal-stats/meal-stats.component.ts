@@ -10,6 +10,7 @@ import { StatsService } from '../../services/stats.service';
 export class MealStatsComponent {
 
   meals = [];
+  stats = {};
   categories = ["Breakfast", "Lunch", "Dinner", "Snack"];
   selectedCategory = "";
 
@@ -24,7 +25,7 @@ export class MealStatsComponent {
     this.api.getMealsByCategory(this.selectedCategory).subscribe(
       data => {
         this.meals = data.meals;
-        alert(JSON.stringify(data));
+        this.stats = data.stats;
       },
       error => {
         alert(JSON.stringify(error.error));
