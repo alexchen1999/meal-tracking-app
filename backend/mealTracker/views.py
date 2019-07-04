@@ -37,8 +37,21 @@ class MealsByTimeFrameView(generics.ListAPIView):
             edd = int(request.GET.get('end_date_day'))
             start = datetime.datetime(sdy, sdm, sdd)
             end = datetime.datetime(edy, edm, edd)
+            
             meals = Meal.objects.filter(timestamp__gte=start, timestamp__lte=end, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+            mealsList = list(meals)
+            
+            #calculate average price/total meal costs in this timeframe
+            totalPrice = 0
+            avgPrice = 0
+            if len(meals) > 0:
+                for meal in meals:
+                    totalPrice += meal['price']
+                avgPrice = totalPrice/len(meals)
+
+            stats = {'totalPrice': totalPrice, 'avgPrice': avgPrice}
+            
+            return JsonResponse({'user': user.username if user.username else "Guest", 'start_date': start, 'end_date': end, 'meals': mealsList, 'stats': stats})
 
 def filter_by_category(request):
     form = CategoryForm()
