@@ -19,7 +19,7 @@
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field> <br>
-    <button (click)="getMealsByTimeFrame()" mat-stroked-button color="primary">Search</button>
+    <button (click)="getMealsByTimeFrame(startDate, endDate)" mat-stroked-button color="primary">Search</button>
     <p>Average cost of meal: {{stats.avgPrice}}</p>
     <p>Total cost of meal: {{stats.totalPrice}}</p>
   </div>

@@ -14,8 +14,8 @@ export class MealStatsComponent {
   stats = {};
   categories = ["Breakfast", "Lunch", "Dinner", "Snack"];
   selectedCategory = "";
-  startDate = new Date('June 10, 2019 00:00:00');
-  endDate = new Date('September 4, 2019 23:24:00');
+  startDate = new Date();
+  endDate = new Date();
   selectedTimeFrame = {startDate: this.startDate, endDate: this.endDate};
 
   constructor(private api: StatsService) { 
@@ -47,10 +47,11 @@ export class MealStatsComponent {
     )
   }
 
-  getMealsByTimeFrame = () => {
-    console.log(this.selectedTimeFrame.startDate)
-    console.log(this.selectedTimeFrame.startDate.getDate())
-    this.api.getMealsByTimeFrame(this.selectedTimeFrame).subscribe(
+  getMealsByTimeFrame = (startDate, endDate) => {
+    var timeFrame = {startDate, endDate};
+    console.log(timeFrame.startDate)
+    console.log(timeFrame.startDate.getDate())
+    this.api.getMealsByTimeFrame(timeFrame).subscribe(
       data => {
         this.meals = data.meals;
         this.stats = data.stats;
