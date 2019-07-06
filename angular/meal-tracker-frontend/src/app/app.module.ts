@@ -14,6 +14,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AddMealComponent } from './components/add-meal/add-meal.component';
 import { MealTableComponent } from './components/meal-table/meal-table.component';
 import { MealStatsComponent } from './components/meal-stats/meal-stats.component';
+import { LoginComponent } from './components/login/login.component';
 
 // import all modules used by the component here
 @NgModule({
@@ -24,7 +25,8 @@ import { MealStatsComponent } from './components/meal-stats/meal-stats.component
     HomeComponent,
     AddMealComponent,
     MealTableComponent,
-    MealStatsComponent
+    MealStatsComponent,
+    LoginComponent
   ],
   imports: [
     HttpModule,

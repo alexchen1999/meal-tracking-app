@@ -7,6 +7,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AddMealComponent } from './components/add-meal/add-meal.component';
 import { MealStatsComponent } from './components/meal-stats/meal-stats.component';
 import { MealTableComponent } from './components/meal-table/meal-table.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {path: 'user', component: UserProfileComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'create', component: AddMealComponent },
   {path: 'stats', component: MealStatsComponent },
   {path: 'table', component: MealTableComponent },
+  {path: 'login', component: LoginComponent },
   {path: '', component: HomeComponent },
 ];
 
