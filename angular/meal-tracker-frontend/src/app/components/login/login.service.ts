@@ -12,6 +12,6 @@ export class LoginService {
   constructor( private http : HttpClient ) { }
 
   authenticate(username, password):Observable<any> {
-    return this.http.get(this.baseurl + "/login?username=" + username + "&password=" + password);
+    return this.http.get(this.baseurl + "/loginFromPage?username=" + username + "&password=" + password);
   }
 }

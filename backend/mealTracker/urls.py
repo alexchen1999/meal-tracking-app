@@ -18,6 +18,7 @@ urlpatterns = [
     path('home/', TemplateView.as_view(template_name="home.html"), name="home"),
     path('api', include(router.urls)),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
+    path('loginFromPage', views.loginFromPage, name='loginfrompage'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('register', views.register, name='register'),
     path('logout', views.logout, name='logout'),

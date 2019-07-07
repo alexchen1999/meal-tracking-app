@@ -162,6 +162,17 @@ def register(request):
     context = {'form' : form}
     return render(request, 'registration/register.html', context)
 
+def loginFromPage(request):
+    # here you get the post request username and password
+    username = request.GET.get('username')
+    password = request.GET.get('password')
+
+    # authentication of the user, to check if it's active or None
+    user = authenticate(username=username, password=password)
+    login(request, user)
+    return JsonResponse({'username': user.username, 'name': user.name })
+
+
 @login_required
 def logout(request):
     django_logout(request)
