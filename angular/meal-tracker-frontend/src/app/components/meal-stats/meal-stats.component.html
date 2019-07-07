@@ -7,6 +7,19 @@
     </mat-form-field><br />
     <button (click)="getMealsByCategory()" mat-stroked-button color="primary">Search</button>
     <br/>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" 
+      (dateInput)="addStartDateEvent('input', $event)" (dateChange)="addStartDateEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field> <br>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker2" placeholder="Choose an end date"
+      (dateInput)="addEndDateEvent('input', $event)" (dateChange)="addEndDateEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field> <br>
+    <button (click)="getMealsByTimeFrame(startDate, endDate)" mat-stroked-button color="primary">Search</button>
     <p>Average cost of meal: {{stats.avgPrice}}</p>
     <p>Total cost of meal: {{stats.totalPrice}}</p>
   </div>
