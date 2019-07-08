@@ -16,6 +16,7 @@ import { MealTableComponent } from './components/meal-table/meal-table.component
 import { MealStatsComponent } from './components/meal-stats/meal-stats.component';
 import { NavComponent } from './components/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
+import { TimeGraphComponent } from './components/time-graph/time-graph.component';
 
 // import all modules used by the component here
 @NgModule({
@@ -28,7 +29,8 @@ import { LoginComponent } from './components/login/login.component';
     MealTableComponent,
     MealStatsComponent,
     NavComponent,
-    LoginComponent
+    LoginComponent,
+    TimeGraphComponent
   ],
   imports: [
     HttpModule,
