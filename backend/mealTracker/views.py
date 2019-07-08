@@ -12,6 +12,8 @@ from rest_framework.views import APIView
 from django.http import JsonResponse
 import datetime
 
+CATEGORIES = ["Breakfast", "Lunch", "Dinner", "Snack"]
+
 class UserMealView(APIView):
     def get(self, request):
         user = self.request.user
@@ -62,21 +64,22 @@ class MealsByCategoryView(generics.ListAPIView):
         serializer_class = MealSerializer
         def get(self, request):
             user = request.user
-            category = request.GET.get('category')
-            meals = Meal.objects.filter(category=category, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-            mealsList = list(meals)
+            responseObject = {'user': user.username if user.username else "Guest"}
+            for category in CATEGORIES:
+                meals = Meal.objects.filter(category=category, user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
+                mealsList = list(meals)
 
-            # calc average prices/other stats
-            totalPrice = 0
-            avgPrice = 0
-            if len(meals) > 0:
-                for meal in meals:
-                    totalPrice += meal['price']
-                avgPrice = totalPrice/len(meals)
+                # calc average prices/other stats
+                totalPrice = 0
+                avgPrice = 0
+                if len(meals) > 0:
+                    for meal in meals:
+                        totalPrice += meal['price']
+                    avgPrice = totalPrice/len(meals)
+                stats = {'totalPrice': totalPrice, 'avgPrice': avgPrice}
+                responseObject[category] = {'meals': mealsList, 'stats': stats}
 
-            stats = {'totalPrice': totalPrice, 'avgPrice': avgPrice}
-
-            return JsonResponse({'user': user.username if user.username else "Guest", 'meals': mealsList, 'stats': stats})
+            return JsonResponse(responseObject)
                 
 def index(request):
     return render(request, 'main.html')

@@ -11,8 +11,8 @@ export class StatsService {
 
   constructor(private http : HttpClient) { }
 
-  getMealsByCategory(category):Observable<any> {
-    return this.http.get(this.baseurl + "/filterbycategory?category=" + category);
+  getMealsByCategory():Observable<any> {
+    return this.http.get(this.baseurl + "/filterbycategory");
   }
 
   getMealsByTimeFrame(timeframe):Observable<any> {

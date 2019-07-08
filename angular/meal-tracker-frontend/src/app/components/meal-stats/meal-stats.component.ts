@@ -19,7 +19,15 @@ export class MealStatsComponent {
   selectedTimeFrame = {startDate: this.startDate, endDate: this.endDate};
 
   constructor(private api: StatsService) { 
-    
+    this.api.getMealsByCategory().subscribe(
+      data => {
+        this.meals = data.meals;
+        this.stats = data.stats;
+      },
+      error => {
+        alert(JSON.stringify(error.error));
+      }
+    )
   }
 
   ngOnInit() {
@@ -33,18 +41,6 @@ export class MealStatsComponent {
   addEndDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.endDate = event.value;
     console.log(this.endDate);
-  }
-
-  getMealsByCategory = () => {
-    this.api.getMealsByCategory(this.selectedCategory).subscribe(
-      data => {
-        this.meals = data.meals;
-        this.stats = data.stats;
-      },
-      error => {
-        alert(JSON.stringify(error.error));
-      }
-    )
   }
 
   getMealsByTimeFrame = (startDate, endDate) => {
