@@ -15,6 +15,7 @@ export class HomeComponent {
   meals = [];
   selectedMeal;
   categories = ["Breakfast", "Lunch", "Dinner", "Snack"];
+  basePath = window.location.origin;
 
   // table stuff
   displayedColumns: string[] = ['timestamp', 'name', 'price'];

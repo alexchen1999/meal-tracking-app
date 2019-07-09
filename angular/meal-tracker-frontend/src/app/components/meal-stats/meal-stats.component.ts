@@ -11,7 +11,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 export class MealStatsComponent {
 
   meals = [];
-  stats = {};
+  stats;
   categories = ["Breakfast", "Lunch", "Dinner", "Snack"];
   selectedCategory = "";
   startDate = new Date();
@@ -56,6 +56,10 @@ export class MealStatsComponent {
         alert(JSON.stringify(error.error));
       }
     )
+  }
+
+  getMealsByCategory = () => {
+    console.log(this.selectedCategory);
   }
 
 
