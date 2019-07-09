@@ -1,14 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { StatsService } from '../../services/stats.service';
 import * as CanvasJS from './canvasjs.min';
 
 @Component({
   selector: 'app-time-graph',
   templateUrl: './time-graph.component.html',
-  styleUrls: ['./time-graph.component.css']
+  styleUrls: ['./time-graph.component.css'],
+  providers: [StatsService]
 })
 export class TimeGraphComponent implements OnInit {
+  meals = [];
 
-  constructor() { }
+  constructor(private api: StatsService) { 
+      var timeFrame = {startDate: new Date(2019, 1, 1), endDate: new Date(2019, 12, 31)};
+      this.api.getMealsByTimeFrame(timeFrame).subscribe(
+        data => {
+          console.log(data);
+          this.meals = data.meals;
+          console.log(this.meals);
+        },
+        error => {
+          alert(JSON.stringify(error.error));
+        }
+      )
+  }
 
   ngOnInit() {
     var chart = new CanvasJS.Chart("chartContainer", {
@@ -40,4 +55,20 @@ export class TimeGraphComponent implements OnInit {
     });
     chart.render();
     }
+
+    getMealsByTimeFrame = (startDate, endDate) => {
+      var timeFrame = {startDate, endDate};
+      console.log(timeFrame.startDate)
+      console.log(timeFrame.startDate.getDate())
+      this.api.getMealsByTimeFrame(timeFrame).subscribe(
+        data => {
+          console.log(data);
+          this.meals = data.meals;
+        },
+        error => {
+          alert(JSON.stringify(error.error));
+        }
+      )
+    }
+
 }
