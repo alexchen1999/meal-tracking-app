@@ -20,6 +20,6 @@
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field> <br>
     <button (click)="getMealsByTimeFrame(startDate, endDate)" mat-stroked-button color="primary">Search</button>
-    <p>Average cost of meal: {{stats.avgPrice}}</p>
-    <p>Total cost of meal: {{stats.totalPrice}}</p>
+    <p>Average cost of meal: {{stats ? stats.avgPrice : "n/a"}}</p>
+    <p>Total cost of meal: {{stats ? stats.totalPrice : "n/a"}}</p>
   </div>

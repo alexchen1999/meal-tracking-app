@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class ApiService {
 
   baseurl = "http://localhost:8000/api";
-  httpHeaders = new HttpHeaders({'Content-type': 'application/json'});
+  csrftoken = this.getCookie('csrftoken');
+  httpHeaders = new HttpHeaders({'Content-type': 'application/json', "X-CSRFToken": this.csrftoken});
 
   constructor(private http : HttpClient) { }
 
@@ -35,5 +36,22 @@ export class ApiService {
   deleteMeal(id): Observable<any> {
     return this.http.delete(this.baseurl + "/meals/" + id + "/", 
       {headers: this.httpHeaders});
+  }
+
+  // required for non-GET requests for authenticated users
+  getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
 }

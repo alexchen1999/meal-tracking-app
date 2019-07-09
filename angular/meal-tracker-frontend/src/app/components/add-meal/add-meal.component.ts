@@ -12,7 +12,7 @@ export class AddMealComponent implements OnInit {
   meal;
   categories = ["Breakfast", "Lunch", "Dinner", "Snack"];
 
-  constructor(private api: ApiService) { 
+  constructor(private api: ApiService) {
     this.meal = { name: null, timestamp: null, category: null, price: null, notes: null };
   }
 
