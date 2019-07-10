@@ -9,13 +9,12 @@ export class RegistrationService {
 
   baseurl = "http://localhost:8000"
   csrftoken = this.getCookie('csrftoken');
-  httpHeaders = new HttpHeaders({'Content-type': 'application/json', "X-CSRFToken": this.csrftoken});
 
   constructor(private http : HttpClient) {  }
 
   register(username, name, password):Observable<any> {
     return this.http.post(this.baseurl + "/register", {'username': username, 
-      'name': name, 'password': password}, {headers: this.httpHeaders});
+      'name': name, 'password': password}, {headers: {'Content-Type': 'application/json'} });
 
   }
   // required for non-GET requests for authenticated users

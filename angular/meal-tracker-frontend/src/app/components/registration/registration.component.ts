@@ -20,8 +20,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   register = (username, name, password) => {
-    console.log(username)
-    console.log(password)
     this.registrationService.register(username, name, password)
       .subscribe(user =>
         console.log(user)

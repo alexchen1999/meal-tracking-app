@@ -150,15 +150,12 @@ class UserMealViewSet(viewsets.ModelViewSet):
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
-        print('reaches here')
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            u = form.cleaned_data['username']
-            p = form.cleaned_data['password']
-            n = form.cleaned_data['name']
-            user = CustomUser(username=u, name=n, password=p)
-            user.save()
-            return JsonResponse({'user': user})
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        n = request.POST.get('name')
+        user = CustomUser(username=u, name=n, password=p)
+        user.save()
+        return JsonResponse({'user': user})
 
 def loginFromPage(request):
     # here you get the post request username and password
