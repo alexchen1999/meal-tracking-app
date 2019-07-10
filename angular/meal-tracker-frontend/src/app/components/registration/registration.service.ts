@@ -1,0 +1,38 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RegistrationService {
+
+  baseurl = "http://localhost:8000"
+  csrftoken = this.getCookie('csrftoken');
+  httpHeaders = new HttpHeaders({'Content-type': 'application/json', "X-CSRFToken": this.csrftoken});
+
+  constructor(private http : HttpClient) {  }
+
+  register(username, name, password):Observable<any> {
+    return this.http.post(this.baseurl + "/register", {'username': username, 
+      'name': name, 'password': password}, {headers: this.httpHeaders});
+
+  }
+  // required for non-GET requests for authenticated users
+  getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+}
