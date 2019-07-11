@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StatsService } from '../../services/stats.service';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-meal-stats',
@@ -17,12 +17,23 @@ export class MealStatsComponent {
   selectedCategory = "";
   startDate = new Date();
   endDate = new Date();
-  selectedTimeFrame = {startDate: this.startDate, endDate: this.endDate};
+  selectedTimeFrame = { startDate: this.startDate, endDate: this.endDate };
+  catGraphData = [];
+  loaded = false;
 
-  constructor(private api: StatsService) { 
+  constructor(private api: StatsService) {
     this.api.getMealsByCategory().subscribe(
       data => {
         this.mealsByCategory = data;
+        console.log(data);
+        for (let key in this.mealsByCategory) {
+          if (key != "user") {
+            let graphBar = {"y": parseFloat(this.mealsByCategory[key]['stats']['avgPrice']), "label": key };
+            this.catGraphData.push(graphBar);
+          }
+        }
+        this.loaded = true;
+        console.log(this.catGraphData);
       },
       error => {
         alert(JSON.stringify(error.error));
@@ -44,7 +55,7 @@ export class MealStatsComponent {
   }
 
   getMealsByTimeFrame = (startDate, endDate) => {
-    var timeFrame = {startDate, endDate};
+    var timeFrame = { startDate, endDate };
     console.log(timeFrame.startDate)
     console.log(timeFrame.startDate.getDate())
     this.api.getMealsByTimeFrame(timeFrame).subscribe(
@@ -59,8 +70,8 @@ export class MealStatsComponent {
   }
 
   getMealsByCategory = () => {
-    console.log(this.mealsByCategory);
     this.stats = this.mealsByCategory[this.selectedCategory].stats;
+    this.meals = this.mealsByCategory[this.selectedCategory].meals;
   }
 
 

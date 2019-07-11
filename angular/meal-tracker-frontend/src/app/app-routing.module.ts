@@ -9,6 +9,7 @@ import { MealStatsComponent } from './components/meal-stats/meal-stats.component
 import { MealTableComponent } from './components/meal-table/meal-table.component';
 import { LoginComponent } from './components/login/login.component';
 import { TimeGraphComponent } from './components/time-graph/time-graph.component';
+import { GraphComponent } from './components/graph/graph.component';
 
 const routes: Routes = [
   {path: 'user', component: UserProfileComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'table', component: MealTableComponent },
   {path: 'login', component: LoginComponent },
   {path: 'timegraph', component: TimeGraphComponent },
+  {path: 'graph', component: GraphComponent },
   {path: '', component: HomeComponent },
 ];
 
