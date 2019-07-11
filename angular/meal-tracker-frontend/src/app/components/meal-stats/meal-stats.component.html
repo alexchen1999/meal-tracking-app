@@ -1,39 +1,45 @@
 <div class="container">
-  <h1>Meal Stats</h1>
-  <div *ngIf="loaded">
-    <div class="graphsContainer">
-      <app-graph title="Meals by Category" [data]="catGraphData" type="column"></app-graph>
-      <!-- <app-graph title="Meals by Timeframe" [data]="catGraphData" type="line"></app-graph> -->
+  <div class="row">
+    <div class="col-8">
+      <h2>Your stats</h2>
+      <div *ngIf="loaded">
+        <div class="graphsContainer">
+          <app-graph title="Meals by Category" [data]="catGraphData" type="column"></app-graph>
+          <!-- <app-graph title="Meals by Timeframe" [data]="catGraphData" type="line"></app-graph> -->
+        </div>
+      </div>
     </div>
-    <h2>More detailed stats</h2>
-    <mat-form-field>
-      <mat-select placeholder="Category" [(ngModel)]="selectedCategory">
-        <mat-option *ngFor="let category of categories" value={{category}}>{{category}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button (click)="getMealsByCategory()" mat-stroked-button color="primary">Search</button>
-    <br />
-    <!-- <mat-form-field>
-      <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" (dateInput)="addStartDateEvent('input', $event)"
-        (dateChange)="addStartDateEvent('change', $event)">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field> <br>
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker2" placeholder="Choose an end date" (dateInput)="addEndDateEvent('input', $event)"
-        (dateChange)="addEndDateEvent('change', $event)">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field> <br>
-    <button (click)="getMealsByTimeFrame(startDate, endDate)" mat-stroked-button color="primary">Search</button> -->
-    <p>Average cost of meal: {{stats ? stats.avgPrice : "n/a"}}</p>
-    <p>Total cost of meal: {{stats ? stats.totalPrice : "n/a"}}</p>
-    <div *ngIf="meals.length > 0">
-      <p>Meals:</p>
-      <div class="card">
-        <ul *ngFor="let meal of meals" class="list-group list-group-flush">
-          <li class="list-group-item">{{meal.name}} (${{meal.price}})</li>
-        </ul>
+    <div class="col-4">
+      <h3>Meal Insights</h3>
+      <mat-form-field>
+        <mat-select placeholder="Category" [(ngModel)]="selectedCategory">
+          <mat-option *ngFor="let category of categories" value={{category}}>{{category}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button (click)="getMealsByCategory()" mat-stroked-button color="primary">Search</button>
+      <br />
+      <!-- <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" (dateInput)="addStartDateEvent('input', $event)"
+              (dateChange)="addStartDateEvent('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field> <br>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date" (dateInput)="addEndDateEvent('input', $event)"
+              (dateChange)="addEndDateEvent('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field> <br>
+          <button (click)="getMealsByTimeFrame(startDate, endDate)" mat-stroked-button color="primary">Search</button> -->
+      <p>Average cost of meal: {{stats ? stats.avgPrice : "n/a"}}</p>
+      <p>Total cost of meal: {{stats ? stats.totalPrice : "n/a"}}</p>
+      <div *ngIf="meals.length > 0">
+        <p>Meals:</p>
+        <div class="card">
+          <ul *ngFor="let meal of meals" class="list-group list-group-flush">
+            <li class="list-group-item">{{meal.name}} (${{meal.price}})</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
