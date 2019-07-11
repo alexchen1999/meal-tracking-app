@@ -18,6 +18,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
 import { TimeGraphComponent } from './components/time-graph/time-graph.component';
 import { GraphComponent } from './components/graph/graph.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 // import all modules used by the component here
 @NgModule({
@@ -32,7 +33,8 @@ import { GraphComponent } from './components/graph/graph.component';
     NavComponent,
     LoginComponent,
     TimeGraphComponent,
-    GraphComponent
+    GraphComponent,
+    RegistrationComponent
   ],
   imports: [
     HttpModule,

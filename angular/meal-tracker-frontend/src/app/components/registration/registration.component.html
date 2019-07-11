@@ -1,0 +1,13 @@
+<div class="example-container" style="text-align:center; padding-top:100px">
+  <h1>Register</h1> <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="username" placeholder="Username"> 
+  </mat-form-field> <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="name" placeholder="Name"> 
+</mat-form-field> <br>
+  <mat-form-field>
+      <input matInput type="password" [(ngModel)]="password" placeholder="Password"> 
+  </mat-form-field> <br>
+  <button (click)="register(username, name, password)" mat-stroked-button color="primary">Register</button>
+</div>
