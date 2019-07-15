@@ -11,6 +11,7 @@ from django.contrib.auth import logout as django_logout
 from rest_framework.views import APIView
 from django.http import JsonResponse
 import datetime
+import json
 from django.views.decorators.csrf import csrf_exempt
 
 CATEGORIES = ["Breakfast", "Lunch", "Dinner", "Snack"]
@@ -150,12 +151,14 @@ class UserMealViewSet(viewsets.ModelViewSet):
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
-        u = request.POST.get('username')
-        p = request.POST.get('password')
-        n = request.POST.get('name')
+        body_unicode = request.body.decode('utf-8') 
+        body = json.loads(body_unicode) 
+        u = body['username']
+        n = body['name']
+        p = body['password']
         user = CustomUser(username=u, name=n, password=p)
         user.save()
-        return JsonResponse({'user': user})
+        return JsonResponse({'username': u, 'password': p, 'name': n})
 
 def loginFromPage(request):
     # here you get the post request username and password

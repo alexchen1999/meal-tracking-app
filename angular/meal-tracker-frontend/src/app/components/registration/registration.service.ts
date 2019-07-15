@@ -13,6 +13,8 @@ export class RegistrationService {
   constructor(private http : HttpClient) {  }
 
   register(username, name, password):Observable<any> {
+    console.log(username)
+    console.log(name)
     return this.http.post(this.baseurl + "/register", {'username': username, 
       'name': name, 'password': password}, {headers: {'Content-Type': 'application/json'} });
 

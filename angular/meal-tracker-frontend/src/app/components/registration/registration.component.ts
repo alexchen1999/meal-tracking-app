@@ -9,10 +9,6 @@ import { RegistrationService } from './registration.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  username = "";
-  name = "";
-  password1 = "";
-
 
   constructor(private registrationService : RegistrationService) { }
 
@@ -21,8 +17,8 @@ export class RegistrationComponent implements OnInit {
 
   register = (username, name, password) => {
     this.registrationService.register(username, name, password)
-      .subscribe(user =>
-        console.log(user)
+      .subscribe(data =>
+        console.log(data.username + ' ' + data.password + ' ' + data.name)
       )
   }
 
