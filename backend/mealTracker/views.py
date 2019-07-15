@@ -102,9 +102,8 @@ def add(request):
             category = form.cleaned_data['category']
             name = form.cleaned_data['name']
             notes = form.cleaned_data['notes']
-
-            if request.user.is_authenticated:
-                userToAdd = request.user
+            username = form.cleaned_data['username']
+            userToAdd = CustomUser.objects.get(username=username)
 
             meal = Meal(price=price, category=category, name=name, notes=notes, user=userToAdd)
             meal.save()
