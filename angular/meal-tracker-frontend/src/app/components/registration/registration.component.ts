@@ -9,6 +9,9 @@ import { RegistrationService } from './registration.service';
 })
 export class RegistrationComponent implements OnInit {
 
+  username;
+  name;
+  password;
 
   constructor(private registrationService : RegistrationService) { }
 

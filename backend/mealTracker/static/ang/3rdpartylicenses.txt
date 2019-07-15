@@ -339,13 +339,13 @@ MIT
 
 @angular/material/button
 
-@angular/material/dialog
-
-@angular/material/datepicker
-
 @angular/material/sort
 
 @angular/material/table
+
+@angular/material/dialog
+
+@angular/material/datepicker
 
 @angular/http
 MIT

@@ -103,7 +103,7 @@ def add(request):
             name = form.cleaned_data['name']
             notes = form.cleaned_data['notes']
             username = form.cleaned_data['username']
-            userToAdd = CustomUser.objects.get(username=username)
+            userToAdd = CustomUser.objects.get(username="tonyzhang")
 
             meal = Meal(price=price, category=category, name=name, notes=notes, user=userToAdd)
             meal.save()
