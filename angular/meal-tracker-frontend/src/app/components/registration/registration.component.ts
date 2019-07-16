@@ -20,9 +20,10 @@ export class RegistrationComponent implements OnInit {
 
   register = (username, name, password) => {
     this.registrationService.register(username, name, password)
-      .subscribe(data =>
-        console.log(data.username + ' ' + data.password + ' ' + data.name)
-      )
+      .subscribe(data => {
+        alert("registration successful")
+        window.location.href=window.location.origin + "/login";
+      })
   }
 
 

@@ -7,7 +7,8 @@
         <li><a routerLink="/create">Add Meal</a></li>
         <li><a routerLink="/table">Meal History</a></li>
         <!-- <li><a routerLink="/stats">Statistics</a></li> -->
-        <li><a routerLink="/settings">Logout</a></li>
+        <li *ngIf="!loggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="loggedIn"><a href="/logout">Logout</a></li>
       </ul>
     </nav>
   </div>

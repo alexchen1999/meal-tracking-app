@@ -15,7 +15,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('history', views.history, name='history'),
     path('add', views.add, name='add'),
-    path('home/', TemplateView.as_view(template_name="home.html"), name="home"),
+    # path('home/', TemplateView.as_view(template_name="home.html"), name="home"),
     path('api', include(router.urls)),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     path('loginFromPage', views.loginFromPage, name='loginfrompage'),
@@ -26,5 +26,6 @@ urlpatterns = [
     path('time', views.filter_by_time, name='time'),
     path('filterbytime',views.MealsByTimeFrameView.as_view(), name='filterbytime'),
     path('category', views.filter_by_category, name='category'),
-    path('filterbycategory',views.MealsByCategoryView.as_view(), name='filterbycategory')
+    path('filterbycategory',views.MealsByCategoryView.as_view(), name='filterbycategory'),
+    # url('', views.index, name='index')
 ]

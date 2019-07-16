@@ -8,4 +8,7 @@
         <input matInput type="password" [(ngModel)]="password" placeholder="Password"> 
     </mat-form-field> <br>
     <button (click)="authenticate(username, password)" mat-stroked-button color="primary">Login</button>
+    <div class="register">
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </div>
   </div>

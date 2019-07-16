@@ -19,20 +19,15 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  logNames = () => {
-    console.log(this.username);
-    console.log(this.password);
-  }
-
   authenticate = (username, password) => {
-    console.log(username)
-    console.log(password)
     this.loginService.authenticate(username, password).subscribe(
       data => {
         this.user = data;
+        window.location.href = window.location.origin
       },
       error => {
-        alert(JSON.stringify(error.error));
+        alert("The username or password is incorrect. Try again.");
+        console.error(JSON.stringify(error.error));
       }
     )
   }

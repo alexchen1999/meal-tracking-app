@@ -20,7 +20,7 @@ class UserMealView(APIView):
     def get(self, request):
         user = self.request.user
         meals = Meal.objects.filter(user=user.id).values('id', 'name', 'timestamp', 'category', 'price', 'notes')
-        return JsonResponse({'user': user.username if user.username else "Guest", 'meals': list(meals)})
+        return JsonResponse({'user': user.username if user.username else None, 'meals': list(meals)})
         # return JsonResponse({'user': 'Bob'}) 
 
 
@@ -84,7 +84,7 @@ class MealsByCategoryView(generics.ListAPIView):
             return JsonResponse(responseObject)
                 
 def index(request):
-    return render(request, 'main.html')
+    return render(request, 'home.html')
 
 @login_required
 def history(request):
