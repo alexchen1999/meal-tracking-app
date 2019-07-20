@@ -8,67 +8,78 @@ import * as CanvasJS from './canvasjs.min';
   styleUrls: ['./time-graph.component.css'],
   providers: [StatsService]
 })
-export class TimeGraphComponent implements OnInit {
+export class TimeGraphComponent {
   meals = [];
+  months = {};
+  dataPoints = [];
 
-  constructor(private api: StatsService) { 
-      var timeFrame = {startDate: new Date(2019, 1, 1), endDate: new Date(2019, 12, 31)};
-      this.api.getMealsByTimeFrame(timeFrame).subscribe(
+  constructor(private api: StatsService) {
+    var jun = { startDate: new Date(2019, 6, 1), endDate: new Date(2019, 7, 1) };
+    let month1 = new Promise((resolve, reject) => {
+      this.api.getMealsByTimeFrame(jun).subscribe(
         data => {
           console.log(data);
-          this.meals = data.meals;
-          console.log(this.meals);
+          this.months['jun'] = data.stats;
+          resolve();
         },
         error => {
           alert(JSON.stringify(error.error));
         }
       )
+    })
+    let month2 = new Promise((resolve, reject) => {
+      var july = { startDate: new Date(2019, 7, 1), endDate: new Date(2019, 8, 1) };
+      this.api.getMealsByTimeFrame(july).subscribe(
+        data => {
+          this.months['july'] = data.stats;
+          console.log(this.months);
+          console.log(this.months['jun']);
+          resolve();
+        },
+        error => {
+          alert(JSON.stringify(error.error));
+        }
+      )
+    });
+
+    let promises = [month1, month2]
+
+    Promise.all(promises).then((result) => {
+      this.dataPoints.push({ "y": parseInt(this.months['jun'].avgPrice), "label": "June" }, { "y": parseInt(this.months['july'].avgPrice), "label": "July" });
+      console.log(this.dataPoints);
+    })
+    .then(() => {
+      var chart = new CanvasJS.Chart("chartContainer1", {
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+          text: "Meals Organized by Time Frame"
+        },
+        axisY: {
+          includeZero: false
+        },
+        data: [{
+          type: "line",
+          dataPoints: this.dataPoints
+        }]
+      });
+      chart.render();
+    })
   }
 
-  ngOnInit() {
-    var chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      theme: "light2",
-      title:{
-        text: "Meals Organized by Time Frame"
+  getMealsByTimeFrame = (startDate, endDate) => {
+    var timeFrame = { startDate, endDate };
+    console.log(timeFrame.startDate)
+    console.log(timeFrame.startDate.getDate())
+    this.api.getMealsByTimeFrame(timeFrame).subscribe(
+      data => {
+        console.log(data);
+        this.meals = data.meals;
       },
-      axisY:{
-        includeZero: false
-      },
-      data: [{        
-        type: "line",       
-        dataPoints: [
-          { y: 450 },
-          { y: 414},
-          { y: 520, indexLabel: "highest",markerColor: "red", markerType: "triangle" },
-          { y: 460 },
-          { y: 450 },
-          { y: 500 },
-          { y: 480 },
-          { y: 480 },
-          { y: 410 , indexLabel: "lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
-          { y: 500 },
-          { y: 480 },
-          { y: 510 }
-        ]
-      }]
-    });
-    chart.render();
-    }
-
-    getMealsByTimeFrame = (startDate, endDate) => {
-      var timeFrame = {startDate, endDate};
-      console.log(timeFrame.startDate)
-      console.log(timeFrame.startDate.getDate())
-      this.api.getMealsByTimeFrame(timeFrame).subscribe(
-        data => {
-          console.log(data);
-          this.meals = data.meals;
-        },
-        error => {
-          alert(JSON.stringify(error.error));
-        }
-      )
-    }
+      error => {
+        alert(JSON.stringify(error.error));
+      }
+    )
+  }
 
 }
