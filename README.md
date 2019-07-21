@@ -7,9 +7,9 @@ The motivation(s) behind building this project is to 1) gain experience coding i
 ## Tech/framework used
 
 <b>Built with</b>
-- [Python](https://electron.atom.io)
-- [Angular]
-- [Django]
+- [Python](https://www.python.org/)
+- [Angular] (https://angular.io/)
+- [Django] (https://www.djangoproject.com/)
 
 ## Features
 - User Registration and Login
